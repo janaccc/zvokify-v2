@@ -18,7 +18,7 @@ function Navbar() {
             </div>
             <div className="flex items-center gap-8">
                 <div className="flex gap-2 text-secondary-text font-bold border-r-2 border-primary-text pr-6">
-                    <a href="https://github.com/janaccc" className="hover:text-primary-text">GitHub</a>
+                    <a href="https://github.com/janaccc" target="blank" className="hover:text-primary-text">GitHub</a>
                 </div>
                 <div>
                     <Link href="/login" className="h-11 bg-white text-gray-950 rounded-full font-bold hover:bg-secondary-text grid px-8 place-items-center">Prijava</Link>
