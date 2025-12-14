@@ -21,7 +21,7 @@ export default function Navbar() {
                     <a href="https://github.com/janaccc" target="blank" className="hover:text-primary-text">GitHub</a>
                 </div>
                 <div>
-                    <Link href="/login" className="h-11 bg-white text-gray-950 rounded-full font-bold hover:bg-secondary-text grid px-8 place-items-center">Prijava</Link>
+                    <Link href="/login" className="h-11 bg-white text-gray-950 rounded-full font-bold hover:bg-secondary-text grid px-8 place-items-center">Odjava</Link>
                 </div>
             </div>
         </nav>
