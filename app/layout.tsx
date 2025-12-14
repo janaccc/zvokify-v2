@@ -1,44 +1,68 @@
-// app/protected/layout.tsx
-'use client'
+import type { Metadata } from "next";
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { Geist, Geist_Mono } from "next/font/google";
 
-interface ProtectedLayoutProps {
-  children: React.ReactNode
-}
+import "./globals.css";
 
-// Funkcija za preverjanje tokena
-function checkAuth(): boolean {
-  if (typeof document !== 'undefined') {
-    return document.cookie.split(';').some(cookie => cookie.trim().startsWith('token='))
-  }
-  return false
-}
 
-export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
-  const router = useRouter()
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
 
-  useEffect(() => {
-    const loggedIn = checkAuth()
-    setIsLoggedIn(loggedIn)
+const geistSans = Geist({
 
-    if (!loggedIn) {
-      router.replace('/login')
-    }
-  }, [router])
+  variable: "--font-geist-sans",
 
-  // Renderamo vedno vsaj div, da CSS ostane naložen
+  subsets: ["latin"],
+
+});
+
+
+
+const geistMono = Geist_Mono({
+
+  variable: "--font-geist-mono",
+
+  subsets: ["latin"],
+
+});
+
+
+
+export const metadata: Metadata = {
+
+  title: "Zvokify",
+
+  description: "Zvokify je kao spotify",
+
+};
+
+
+
+export default function RootLayout({
+
+  children,
+
+}: Readonly<{
+
+  children: React.ReactNode;
+
+}>) {
+
   return (
-    <div>
-      {isLoggedIn === null && (
-        <div className="flex justify-center items-center h-screen">
-          {/* Loader ali prazna stran med preverjanjem */}
-          <p>Loading...</p>
-        </div>
-      )}
-      {isLoggedIn && children}
-    </div>
-  )
+
+    <html lang="en">
+
+      <body
+
+
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
+
+      >
+
+        {children}
+
+      </body>
+
+    </html>
+
+  );
+
 }
