@@ -4,18 +4,19 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-// Funkcija za preverjanje tokena (lahko jo nadgradiš glede na tvoj auth)
+interface ProtectedLayoutProps {
+  children: React.ReactNode
+}
+
+// Funkcija za preverjanje tokena
 function checkAuth(): boolean {
-  // Preveri localStorage ali cookie
-  // Če uporabljaš JWT cookie, lahko dostopaš do dokument.cookie
-  // Primer: preveri, če cookie 'token' obstaja
   if (typeof document !== 'undefined') {
     return document.cookie.split(';').some(cookie => cookie.trim().startsWith('token='))
   }
   return false
 }
 
-export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
+export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
   const router = useRouter()
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
 
@@ -28,8 +29,16 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     }
   }, [router])
 
-  // Če še nismo preverili auth ali uporabnik ni prijavljen, ne prikazuj vsebine
-  if (isLoggedIn === null || !isLoggedIn) return null
-
-  return <>{children}</>
+  // Renderamo vedno vsaj div, da CSS ostane naložen
+  return (
+    <div>
+      {isLoggedIn === null && (
+        <div className="flex justify-center items-center h-screen">
+          {/* Loader ali prazna stran med preverjanjem */}
+          <p>Loading...</p>
+        </div>
+      )}
+      {isLoggedIn && children}
+    </div>
+  )
 }
