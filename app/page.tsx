@@ -5,6 +5,8 @@ import { MdHomeFilled } from "react-icons/md";
 import Navbar from "@/components/Navbar"
 import { Main } from "next/document";
 import Sidebar from "@/components/Sidebar";
+import Songs from "@/components/Songs";
+import MusicPlayer from "@/components/MusicPlayer";
 
 
 export default function Home() {
@@ -13,7 +15,8 @@ export default function Home() {
       <Navbar />
       <main>
         <Sidebar />
-
+        <Songs/>
+        <MusicPlayer/>
       </main>
     </div>
   );
