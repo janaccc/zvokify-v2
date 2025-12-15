@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdPause, IoMdPlay, IoMdSkipBackward, IoMdSkipForward, IoMdVolumeHigh } from "react-icons/io";
 import { LuRepeat1 } from "react-icons/lu";
 import { MdOutlineQueueMusic } from "react-icons/md";
@@ -11,7 +11,7 @@ export default function MusicPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(50);
     const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState();
+    const [duration, setDuration] = useState(0);
 
     const togglePlayButton = () => {
         if(!audioRef.current) return;
@@ -23,6 +23,27 @@ export default function MusicPlayer() {
         }
         setIsPlaying(!isPlaying)
     }
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        if(!audio) return;
+
+        const updateTime = () => {
+            setCurrentTime(audio.currentTime) //posodobi pesem vsako sekundo za dolzino
+            setDuration(audio.duration | 0)
+        }
+
+        audio.addEventListener("timeupdate",updateTime);
+        audio.addEventListener("loadmetadata", updateTime );
+    }, []);
+
+    const formatTime = (time: number) =>{
+            const minutes = Math.floor(time/60);
+            const seconds = Math.floor(time % 60).toString().padStart(2,"0");
+
+            return `${minutes}:${seconds}`;
+    }
+
 
     return (
         <div className="fixed bottom-0 left-0 w-full bg-black text-white px-4 py-3 shadow-md z-50">
@@ -53,13 +74,13 @@ export default function MusicPlayer() {
 
                     <div className="w-full flex justify-center items-center gap-2">
                         <span className="text-secondary-text font-normal text-sm">
-                            1:45
+                            {formatTime(currentTime)}
                         </span>
                         <div className="w-full">
                             <input type="range" min="0" max="" className="w-full outline-none h-1 bg-zinc-700 rounded-md appearence-none accent-white"/>
                         </div>
                         <span className="text-secondary-text font-normal text-sm">
-                            3:12
+                            {formatTime(duration)}
                         </span>
                     </div>
 
