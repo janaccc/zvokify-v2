@@ -2,19 +2,26 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { IoMdPlay, IoMdSkipBackward, IoMdSkipForward, IoMdVolumeHigh } from "react-icons/io";
+import { IoMdPause, IoMdPlay, IoMdSkipBackward, IoMdSkipForward, IoMdVolumeHigh } from "react-icons/io";
 import { LuRepeat1 } from "react-icons/lu";
 import { MdOutlineQueueMusic } from "react-icons/md";
 
 export default function MusicPlayer() {
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [isPlaying, setIsMusicPlaying] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(50);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState();
 
     const togglePlayButton = () => {
-        
+        if(!audioRef.current) return;
+
+        if(isPlaying){
+            audioRef.current.pause();
+        }else{
+            audioRef.current.play();
+        }
+        setIsPlaying(!isPlaying)
     }
 
     return (
@@ -36,8 +43,8 @@ export default function MusicPlayer() {
                         <button className="text-xl text-secondary-text">
                             <IoMdSkipBackward/>
                         </button>
-                        <button className="bg-white text-xl text-black w-10 h-10 rounded-full grid place-items-center">
-                            <IoMdPlay/>
+                        <button onClick={togglePlayButton} className="bg-white text-xl text-black w-10 h-10 rounded-full grid place-items-center">
+                            {isPlaying ? <IoMdPause/> : <IoMdPlay/>}
                         </button>
                         <button className="text-xl text-secondary-text">
                             <IoMdSkipForward/>
