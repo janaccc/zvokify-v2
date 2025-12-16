@@ -2,6 +2,8 @@ Opis
 
 Zvokify je preprost MP3 predvajalnik, ki uporabnikom omogoča dodajanje glasbenih datotek in njihovo predvajanje v enem mestu.
 
+Link: https://www.zvokify.eu/
+
 Glavne funkcionalnosti
 
 Dodajanje MP3 pesmi v knjižnico
