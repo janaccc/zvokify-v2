@@ -14,7 +14,7 @@ Preskakovanje na naslednjo ali prejšnjo pesem
 
 Prikaz naslova in trajanja pesmi
 
-Uporaba
+<b>Uporaba</b>
 
 Uporabnik klikne gumb »Dodaj pesem« in izbere MP3 datoteko.
 
