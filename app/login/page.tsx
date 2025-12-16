@@ -1,15 +1,28 @@
 "use client"
 import loginUser from "@/lib/auth/loginUser";
+import { supabase } from "@/lib/SupabaseClient";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page(){
     const router = useRouter(); 
         const [email, setEmail] = useState("");
         const [password, setPassword] = useState("");
         const [message, setMessage] = useState("");
+
+            const [loading, setLoading] = useState(true);
+        
+            useEffect(() => {
+                supabase.auth.getSession().then(({ data}) => {
+                    if (data.session) {
+                        router.push("/");
+                    }else{
+                        setLoading(false);
+                    }
+                });
+            }, []); 
 
         const handleLogin = async (e : React.FormEvent) => {
                 e.preventDefault();
@@ -30,6 +43,8 @@ export default function Page(){
 
         }
      }
+
+     if(loading) return null; 
      
 
     return(
