@@ -1,9 +1,24 @@
+"use client";
+
+import useUserSession from "@/custom-hooks/useUserSession";
+import logoutUser from "@/lib/auth/logoutUser";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { GoSearch } from "react-icons/go";
 import { MdHomeFilled } from "react-icons/md";
 
 export default function Navbar() {
+    const router = useRouter();
+    const{session, loading} = useUserSession();
+
+    const handleLogout = async () => {
+        const result = await logoutUser();
+
+        if (!result?.error) {
+            router.push("/");
+        }
+    }
     return (
         <nav className="h-15 flex justify-between items-center px-6 fixed top-0 left-0 w-full bg-black z-100">
             <div className="flex gap-6 items-center">
@@ -21,7 +36,15 @@ export default function Navbar() {
                     <a href="https://github.com/janaccc" target="blank" className="hover:text-primary-text">GitHub</a>
                 </div>
                 <div>
-                    <Link href="/login" className="h-11 bg-white text-gray-950 rounded-full font-bold hover:bg-secondary-text grid px-8 place-items-center">Odjava</Link>
+                    {!loading && (
+                    <> 
+                    {session ? (
+                        <button onClick={handleLogout} className="cursor-pointer h-11 bg-white text-gray-950 rounded-full font-bold hover:bg-secondary-text grid px-8 place-items-center">Odjava</button>
+                    ) : (
+                        <Link href="/login" className="h-11 bg-white text-gray-950 rounded-full font-bold hover:bg-secondary-text grid px-8 place-items-center">Prijava</Link>
+                    )}
+                    </>
+                    )}
                 </div>
             </div>
         </nav>

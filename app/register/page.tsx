@@ -1,10 +1,13 @@
 "use client"
 
+import {signUpUser} from "@/lib/auth/signUpUser";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page(){
+    const router = useRouter(); 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,8 +18,20 @@ export default function Page(){
 
         if(!name.trim() || !email.trim() || !password.trim()){
             setMessage("Izpolni vsa polja!");
+            return;
         }
-    }
+
+        const result = await signUpUser(name, email, password);
+        if(result?.error){
+            setMessage(result.error);
+        } else{
+            setMessage("Registracija uspešna.");
+            setTimeout(() =>{
+                router.push("/");
+                }, 3000);
+            }
+
+        }
 
     return(
         <div className="h-screen flex justify-center items-center w-full bg-hover">
