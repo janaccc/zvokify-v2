@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "./providers";
 import { PlayerProvider } from "@/context/PlayerContext";
-import MusicPlayer from "@/components/MusicPlayer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,12 +29,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
-        {/* Najprej glavni providerji */}
+        {/* Glavni providerji */}
         <Providers>
-          {/* PlayerProvider za MusicPlayer in Songs */}
+          {/* PlayerProvider ovije samo vsebino, ki jo želiš, da ima dostop do MusicPlayer */}
           <PlayerProvider>
-            {children}      {/* tvoja vsebina (npr. Songs) */}
-            <MusicPlayer /> {/* vedno vidna na dnu */}
+            {children} {/* MusicPlayer NI več tukaj */}
           </PlayerProvider>
         </Providers>
       </body>

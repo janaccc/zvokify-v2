@@ -27,23 +27,29 @@ export default function MusicPlayer() {
     }
 
     // Predvajanje trenutne pesmi
-    useEffect(() => {
+    // Predvajanje trenutne pesmi
+useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !currentSong) return;
 
-    audio.pause();
-    audio.currentTime = 0;
-    audio.src = currentSong.audio_url;
+    // Če je nova pesem, nastavi src in resetiraj čas
+    if (audio.src !== currentSong.audio_url) {
+        audio.src = currentSong.audio_url;
+        audio.currentTime = 0;
+    }
 
+    // Predvajaj ali pauziraj
     if (isPlaying) {
         audio.play();
+    } else {
+        audio.pause();
     }
 
     const handleEnded = () => {
         setIsPlaying(false);
     }
-    audio.addEventListener("ended", handleEnded);
 
+    audio.addEventListener("ended", handleEnded);
     return () => {
         audio.removeEventListener("ended", handleEnded);
     }
