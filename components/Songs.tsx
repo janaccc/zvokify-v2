@@ -9,7 +9,7 @@ import { IoMdPlay } from "react-icons/io";
 import { usePlayer } from "@/context/PlayerContext";
 
 export default function Songs() {
-    const { setCurrentSong, setSongs, searchTerm } = usePlayer();
+    const { setCurrentSong, searchTerm } = usePlayer(); // odstranjen setSongs
 
     const getallSongs = async () => {
         const { data, error } = await supabase.from("songs").select("*");
@@ -22,10 +22,7 @@ export default function Songs() {
 
     const { data: songs, isLoading, error, isError } = useQuery({
         queryFn: getallSongs,
-        queryKey: ["allSongs"],
-        onSuccess: (data) => {
-            if (data) setSongs(data);
-        }
+        queryKey: ["allSongs"]
     });
 
     // Filter songs glede na searchTerm
@@ -57,27 +54,25 @@ export default function Songs() {
                 <button className="bg-primary w-12 h-12 rounded-full grid place-items-center absolute bottom-8 right-5 opacity-0 group-hover:opacity-100 group-hover:bottom-18 transition-all duration-300 ease-in-out cursor-pointer">
                     <IoMdPlay />
                 </button>
-                {filteredSongs?.map((song: Song, index) => {
-                    return (
-                        <div
-                            key={song.id}
-                            className="relative group bg-background p-3 cursor-pointer rounded-md hover:bg-hover transition"
-                            onClick={() => setCurrentSong(song)}
-                        >
-                            <Image src={song.cover_image_url} alt="Naslovna slika" width={500} height={500} className="w-full h-50 object-cover rounded-md cursor-pointer" />
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 rounded-md transition" />
-                            <button className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">
-                                <div className="bg-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
-                                    <IoMdPlay />
-                                </div>
-                            </button>
-                            <div className="mt-2">
-                                <p className="text-primary-text font-semibold">{song.title}</p>
-                                <p className="text-secondary-text text-sm">{song.artist}</p>
+                {filteredSongs?.map((song: Song) => (
+                    <div
+                        key={song.id}
+                        className="relative group bg-background p-3 cursor-pointer rounded-md hover:bg-hover transition"
+                        onClick={() => setCurrentSong(song)}
+                    >
+                        <Image src={song.cover_image_url} alt="Naslovna slika" width={500} height={500} className="w-full h-50 object-cover rounded-md cursor-pointer" />
+                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 rounded-md transition" />
+                        <button className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">
+                            <div className="bg-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                                <IoMdPlay />
                             </div>
+                        </button>
+                        <div className="mt-2">
+                            <p className="text-primary-text font-semibold">{song.title}</p>
+                            <p className="text-secondary-text text-sm">{song.artist}</p>
                         </div>
-                    )
-                })}
+                    </div>
+                ))}
             </div>
         </div>
     )
