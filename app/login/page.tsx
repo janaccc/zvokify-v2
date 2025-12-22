@@ -55,7 +55,7 @@ export default function Page(){
                     <form onSubmit={handleLogin}>
                         {message && <p className="font-semibold text-center mb-4 py-1 rounded-full text-red-600">{message}</p>}
                         <input onChange={(e) => setEmail(e.target.value)} value={email} type="text" placeholder="Vnesi E-Mail" className="outline-none border-1 border-neutral-600 p-2 w-full rounded-md text-primary-text placeholder-neutral-600 mb-6 focus:text-secondary-text"/>
-                        <input onChange={(e) => setPassword(e.target.value)} value={password} type="text" placeholder="Vnesi geslo" className="outline-none border-1 border-neutral-600 p-2 w-full rounded-md text-primary-text placeholder-neutral-600 mb-6 focus:text-secondary-text"/>
+                        <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" placeholder="Vnesi geslo" className="outline-none border-1 border-neutral-600 p-2 w-full rounded-md text-primary-text placeholder-neutral-600 mb-6 focus:text-secondary-text"/>
                         <button className="bg-primary py-3 rounded-full w-full font-bold cursor-pointer">Prijava</button>
                         <div className="text-secondary-text text-center my-6">
                             <span>Nimaš računa?</span>
