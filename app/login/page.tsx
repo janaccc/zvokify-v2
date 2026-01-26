@@ -143,4 +143,3 @@ export default function LoginPage() {
 
 //takojšnji redirect po uspehu
 
-//Težavnost: 4/10

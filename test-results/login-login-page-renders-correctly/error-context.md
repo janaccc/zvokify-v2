@@ -1,0 +1,85 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [active]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - navigation [ref=e7]:
+            - button "previous" [disabled] [ref=e8]:
+              - img "previous" [ref=e9]
+            - generic [ref=e11]:
+              - generic [ref=e12]: 1/
+              - text: "1"
+            - button "next" [disabled] [ref=e13]:
+              - img "next" [ref=e14]
+          - img
+        - generic [ref=e16]:
+          - link "Next.js 16.0.10 (stale) Turbopack" [ref=e17] [cursor=pointer]:
+            - /url: https://nextjs.org/docs/messages/version-staleness
+            - img [ref=e18]
+            - generic "There is a newer version (16.1.5) available, upgrade recommended!" [ref=e20]: Next.js 16.0.10 (stale)
+            - generic [ref=e21]: Turbopack
+          - img
+      - dialog "Runtime Error" [ref=e23]:
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - generic [ref=e30]: Runtime Error
+              - generic [ref=e31]:
+                - button "Copy Error Info" [ref=e32] [cursor=pointer]:
+                  - img [ref=e33]
+                - button "No related documentation found" [disabled] [ref=e35]:
+                  - img [ref=e36]
+                - link "Learn more about enabling Node.js inspector for server code with Chrome DevTools" [ref=e38] [cursor=pointer]:
+                  - /url: https://nextjs.org/docs/app/building-your-application/configuring/debugging#server-side-code
+                  - img [ref=e39]
+            - generic [ref=e48]: supabaseKey is required.
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - paragraph [ref=e52]:
+                - img [ref=e54]
+                - generic [ref=e58]: lib/SupabaseClient.ts (6:37) @ module evaluation
+                - button "Open in editor" [ref=e59] [cursor=pointer]:
+                  - img [ref=e61]
+              - generic [ref=e64]:
+                - generic [ref=e65]: 4 | const supabaseAnonkey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+                - generic [ref=e66]: 5 |
+                - generic [ref=e67]: "> 6 | export const supabase = createClient(supabaseURL, supabaseAnonkey);"
+                - generic [ref=e68]: "| ^"
+            - generic [ref=e69]:
+              - generic [ref=e70]:
+                - paragraph [ref=e71]:
+                  - text: Call Stack
+                  - generic [ref=e72]: "18"
+                - button "Show 16 ignore-listed frame(s)" [ref=e73] [cursor=pointer]:
+                  - text: Show 16 ignore-listed frame(s)
+                  - img [ref=e74]
+              - generic [ref=e76]:
+                - generic [ref=e77]:
+                  - text: module evaluation
+                  - button "Open module evaluation in editor" [ref=e78] [cursor=pointer]:
+                    - img [ref=e79]
+                - text: lib/SupabaseClient.ts (6:37)
+              - generic [ref=e81]:
+                - generic [ref=e82]:
+                  - text: module evaluation
+                  - button "Open module evaluation in editor" [ref=e83] [cursor=pointer]:
+                    - img [ref=e84]
+                - text: app/login/page.tsx (8:1)
+        - generic [ref=e86]: "1"
+        - generic [ref=e87]: "2"
+    - generic [ref=e92] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=e93]:
+        - img [ref=e94]
+      - generic [ref=e97]:
+        - button "Open issues overlay" [ref=e98]:
+          - generic [ref=e99]:
+            - generic [ref=e100]: "0"
+            - generic [ref=e101]: "1"
+          - generic [ref=e102]: Issue
+        - button "Collapse issues badge" [ref=e103]:
+          - img [ref=e104]
+  - 'heading "Application error: a client-side exception has occurred while loading localhost (see the browser console for more information)." [level=2] [ref=e108]'
+```
