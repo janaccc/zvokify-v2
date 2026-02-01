@@ -1,0 +1,22 @@
+{
+  "version": "1.58.1",
+  "viteVersion": "6.4.1",
+  "registerSourceHash": "ea233d95b980072c81eb49458aee55f5d33fdb02",
+  "components": [
+    {
+      "id": "C__Users_DavidBohak_Downloads_zvokify_v2_tests_components___components_LoginForm",
+      "filename": "C:\\Users\\DavidBohak\\Downloads\\zvokify-v2\\tests\\components\\login.spec.tsx",
+      "importSource": "@/components/LoginForm"
+    }
+  ],
+  "sources": {
+    "C:/Users/DavidBohak/Downloads/zvokify-v2/playwright/index.html": {
+      "timestamp": 1769979372863.67
+    }
+  },
+  "deps": {
+    "C:\\Users\\DavidBohak\\Downloads\\zvokify-v2\\components\\LoginForm.tsx": [
+      "C:\\Users\\DavidBohak\\Downloads\\zvokify-v2\\components\\LoginForm.tsx"
+    ]
+  }
+}

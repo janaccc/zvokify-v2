@@ -6,16 +6,17 @@ import { test, expect } from "@playwright/test";
 test("login page renders correctly", async ({ page }) => {
   await page.goto("/login");
 
-  await expect(
-    page.getByRole("heading", { name: "Prijava" })
-  ).toBeVisible();
-
+  // Heading smo odstranili, ker ga zdaj ni direktno na page
   await expect(
     page.getByPlaceholder("Vnesi E-Mail")
   ).toBeVisible();
 
   await expect(
     page.getByPlaceholder("Vnesi geslo")
+  ).toBeVisible();
+
+  await expect(
+    page.getByRole("button", { name: "Prijava" })
   ).toBeVisible();
 });
 

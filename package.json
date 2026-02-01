@@ -2,15 +2,15 @@
   "name": "zvokify-projekt",
   "version": "0.1.0",
   "private": true,
- "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "eslint",
-  "test:e2e": "playwright test",
-  "test:e2e:ui": "playwright test --ui"
-},
-
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test:e2e": "playwright test --config=playwright.e2e.config.ts",
+    "test:cp": "playwright test --config=playwright.cp.config.ts",
+    "test": "npm run test:e2e && npm run test:cp"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.93.1",
     "@tanstack/react-query": "^5.90.12",
@@ -20,19 +20,21 @@
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.0",
+    "@playwright/experimental-ct-react": "^1.58.1",
+    "@playwright/test": "^1.58.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
     "jest": "^30.2.0",
     "playwright": "^1.58.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^4.5.14"
   }
-  
 }
