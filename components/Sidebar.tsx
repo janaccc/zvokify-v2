@@ -38,7 +38,7 @@ export default function Sidebar() {
                             </h2>
 
                             <Link
-                                href="upload-song"
+                                href="/upload-song"
                                 className="p-2 rounded-full hover:bg-hover flex items-center justify-center"
                             >
                                 <LuPlus size={30} />

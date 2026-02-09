@@ -53,7 +53,7 @@ export default function Page(){
                         <button className="bg-primary py-3 rounded-full w-full font-bold cursor-pointer">Prijava</button>
                         <div className="text-secondary-text text-center my-6">
                             <span>Nimaš računa?</span>
-                            <Link href="register" className="ml-2 text-white underline hover:text-primary">Registriraj se</Link>
+                            <Link href="/register" className="ml-2 text-white underline hover:text-primary">Registriraj se</Link>
                         </div>
                     </form>
                 </div>
