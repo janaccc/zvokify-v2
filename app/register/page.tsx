@@ -1,7 +1,7 @@
 "use client"
 
 import { signUpUser } from "@/lib/auth/signUpUser";
-import { supabase } from "@/lib/SupabaseClient";
+import { redirectIfAuthenticated } from "@/lib/auth/sessionRedirect";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,13 +17,7 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data }) => {
-            if (data.session) {
-                router.push("/");
-            } else {
-                setLoading(false);
-            }
-        });
+        redirectIfAuthenticated(router, () => setLoading(false));
     }, []);
 
     const handleRegister = async (e: React.FormEvent) => {

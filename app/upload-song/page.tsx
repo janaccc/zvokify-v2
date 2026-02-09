@@ -1,6 +1,7 @@
 "use client";
 import useUserSession from "@/custom-hooks/useUserSession";
 import { supabase } from "@/lib/SupabaseClient";
+import { requireAuthenticatedSession } from "@/lib/auth/sessionRedirect";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,13 +18,7 @@ export default function Page() {
     const { session } = useUserSession();
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data }) => {
-            if (!data.session) {
-                router.push("/");
-            } else {
-                setPageLoading(false);
-            }
-        });
+        requireAuthenticatedSession(router, () => setPageLoading(false));
     }, []);
 
     const handleUpload = async (e: React.FormEvent) => {
