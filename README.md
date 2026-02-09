@@ -28,251 +28,100 @@ S klikom na »Predvajaj« se začne predvajanje.
 
 Zvokify je namenjen enostavnemu poslušanju glasbe za vsakodnevno uporabo.
 -------------------------------------------------------------------------------------------------------------------------------------------
-BOHAK — README
-🧪 End-to-End (E2E) testi
+BOHAK
+E2E:
+  -Dodan Playwright config: playwright.config.ts
+  -Skripti in devDependency: package.json
+      -playwright.config.ts nastavi Next dev server in baseURL, da testi tečejo stabilno.
+      -home.spec.ts preveri, da se home naloži in da je viden “Prijava” entrypoint.
+      -auth.spec.ts pokrije obvezna polja za login/register (client-side validacija).
+      -upload-redirect.spec.ts potrdi redirect na / brez seje.
+      -navigation.spec.ts : navigacija med home/login/register
+      -home-ui.spec.ts : sidebar login prompt, search input
+      -music-player.spec.ts : prisotnost playerja + kontrol
 
-Dodani so Playwright E2E testi za preverjanje osnovnega delovanja aplikacije.
+KAKO POGNATI ?
+    npm install
+    npx playwright install
+    npm run e2e
 
-Konfiguracija
+COMPONENT TEST:
+      -Nastavil sem component testno okolje z Vitest + Testing Library in dodal še tri component teste (Navbar, Sidebar, MusicPlayer)
+      -Dodan Vitest setup in konfiguracija: vitest.config.ts, setup.ts
+      -Dodani component testi: Navbar.test.tsx, Sidebar.test.tsx, MusicPlayer.test.tsx
+      -Dodani skripti in devDependencies: package.json
+      -Kratek kontekst, kaj testirajo
+      -Navbar.test.tsx: prikaz “Prijava” in GitHub link za neavtenticiranega uporabnika
+      -Sidebar.test.tsx: login prompt in “Nalaganje...” stanje
+      -MusicPlayer.test.tsx: prikaz trenutne pesmi (naslov + izvajalec)
+      -Naslednji koraki
 
-Dodan Playwright config → playwright.config.ts
+KAKO POGNATI ?
+      npm install
+      npm run test:components
 
-Posodobljen package.json:
 
-skripti za poganjanje testov
 
-dodani Playwright devDependencies
+REFAKTORIRANJE KODE (FUNKCIJA)
+      Skrajšal sem ponavljanje okoli preverjanja sessiona in dodal jasno komentirano helper funkcijo. Logika je zdaj v enem mestu, komponente pa ostanejo bolj čiste.
 
-playwright.config.ts:
+  Kaj sem spremenil
 
-nastavi Next.js dev server
+  -Dodan helper z razlago: sessionRedirect.ts
+  -Poenostavljen session-check v:
+      -page.tsx
+      -page.tsx
+      -page.tsx
 
-določi baseURL
 
-omogoča stabilno izvajanje testov
+ZAKAJ ?
+Preverjanje Supabase sessiona je bilo podvojeno na 3 mestih.
+      
 
-Testne datoteke
 
-home.spec.ts
+BUGI (3)
 
-preveri nalaganje home strani
+1) Napačna invalidacija query cache (user songs se po brisanju niso osvežile)
 
-preveri vidnost “Prijava” entrypointa
+  -Kje: DeleteButton.tsx
+  -Prej: invalidateQueries({ queryKey: ["userSongs"] })
+  -Query v UserSongs je pa ["UserSongs", userId] → zaradi napačnega key-a cache ni bil invalidiran.
+  -Zdaj: invalidateQueries({ queryKey: ["UserSongs"] })
+  -Zakaj: React Query matcha po prefiksu, a key mora biti pravilen. Zdaj se seznam uporabnikovih pesmi po brisanju vedno osveži.
 
-auth.spec.ts
 
-test client-side validacije login/register obrazcev
 
-upload-redirect.spec.ts
+2) Napačen link do upload strani (relativna pot)
 
-preveri redirect na / če ni aktivne seje
+  -Kje: Sidebar.tsx
+  -Prej: href="upload-song"
+  -Na npr. /login bi šlo na /login/upload-song (napačno).
+  -Zdaj: href="/upload-song"
+  -Zakaj: Absolutne poti preprečijo napačne nested URL-je.
 
-navigation.spec.ts
 
-navigacija med:
+  
+3) Napačni linki med login/register (relativne poti)
 
-home
+  -Kje: page.tsx, page.tsx
+  -Prej: href="register" in href="login"
+  -Na /login bi šlo na /login/register, na /register pa /register/login.
+  -Zdaj: href="/register" in href="/login"
+  -Zakaj: Absolutne poti garantiranjo pravilno navigacijo ne glede na trenutno stran.
 
-login
+  
+SPREMENJENE DATOTEKE
 
-register
+-DeleteButton.tsx
+-Sidebar.tsx
+-page.tsx (login)
+-page.tsx (register)
 
-home-ui.spec.ts
 
-sidebar login prompt
+POGON avtomatski e2e datotek
 
-search input
+Dodal sem yml datoteko , ki avtomatsko požene e2e teste po zagonu aplikacije na main brenchu.
 
-music-player.spec.ts
-
-prisotnost glasbenega predvajalnika
-
-osnovne kontrole
-
-▶️ Kako pognati E2E teste
-npm install
-npx playwright install
-npm run e2e
-
-🧩 Component testi
-
-Vzpostavljeno testno okolje z:
-
-Vitest
-
-Testing Library
-
-Konfiguracija
-
-Dodano:
-
-vitest.config.ts
-
-setup.ts
-
-component test skripti v package.json
-
-Dodani testi
-
-Navbar.test.tsx
-
-prikaz “Prijava” gumba
-
-GitHub link za neavtenticiranega uporabnika
-
-Sidebar.test.tsx
-
-login prompt
-
-stanje “Nalaganje...”
-
-MusicPlayer.test.tsx
-
-prikaz trenutne pesmi:
-
-naslov
-
-izvajalec
-
-▶️ Kako pognati component teste
-npm install
-npm run test:components
-
-♻️ Refaktoriranje kode (Session logika)
-
-Optimiziral sem preverjanje uporabniške seje:
-
-Kaj je bilo narejeno
-
-Dodan helper:
-
-sessionRedirect.ts
-
-jasno komentirana funkcija za session check
-
-Poenostavljen session check v:
-
-page.tsx (več mest)
-
-Zakaj
-
-Preverjanje Supabase sessiona je bilo podvojeno na treh mestih, kar:
-
-otežuje vzdrževanje
-
-poveča možnost bugov
-
-Zdaj je logika centralizirana.
-
-🐞 Popravki bugov
-1️⃣ Napačna invalidacija query cache
-
-Problem:
-
-user songs se po brisanju niso osvežile
-
-napačen React Query key
-
-Datoteka:
-
-DeleteButton.tsx
-
-Prej:
-
-invalidateQueries({ queryKey: ["userSongs"] })
-
-
-Pravilni query:
-
-["UserSongs", userId]
-
-
-Fix:
-
-invalidateQueries({ queryKey: ["UserSongs"] })
-
-
-Zakaj:
-
-React Query matcha po prefiksu, vendar mora biti key pravilno zapisan.
-
-2️⃣ Napačen link do upload strani
-
-Datoteka:
-
-Sidebar.tsx
-
-Prej:
-
-href="upload-song"
-
-
-Na /login → /login/upload-song (napačno).
-
-Zdaj:
-
-href="/upload-song"
-
-
-Razlog:
-
-Absolutne poti preprečijo nested URL napake.
-
-3️⃣ Napačni login/register linki
-
-Datoteke:
-
-page.tsx (login)
-
-page.tsx (register)
-
-Prej:
-
-href="register"
-href="login"
-
-
-Napaka:
-
-/login/register
-
-/register/login
-
-Fix:
-
-href="/register"
-href="/login"
-
-
-Razlog:
-
-Absolutne poti zagotavljajo pravilno navigacijo.
-
-📂 Spremenjene datoteke
-
-DeleteButton.tsx
-
-Sidebar.tsx
-
-page.tsx (login)
-
-page.tsx (register)
-
-⚙️ Avtomatski E2E testi (CI)
-
-Dodana je GitHub Actions YAML datoteka, ki:
-
-samodejno požene E2E teste
-
-ob pushu na main branch
-
-po zagonu aplikacije
-
-To omogoča:
-
-hitrejše zaznavanje bugov
-
-bolj stabilen deployment
 
 
 
