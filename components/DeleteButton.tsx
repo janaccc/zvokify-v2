@@ -48,7 +48,7 @@ export default function DeleteButton({
       return;
     }
 
-    queryClient.invalidateQueries({ queryKey: ["userSongs"] });
+    queryClient.invalidateQueries({ queryKey: ["UserSongs"] });
     queryClient.invalidateQueries({ queryKey: ["allSongs"] });
   };
   return (
